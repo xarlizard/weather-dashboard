@@ -12,10 +12,11 @@ const client = axios.create({
 
 function App() {
   const [latlon, setLatlon] = useState([null, null]);
+  const [data, setData] = useState({weather: "No"}); //we initialize the variable in order to not break the component, TODO: typescript can fix this
 
   function newCoords(position) {
     console.log(position.coords.latitude, position.coords.longitude)
-    setLatlon([position.coords.latitude, position.coords.longitude])
+    setLatlon([position.coords.latitude.toFixed(4), position.coords.longitude.toFixed(4)])
   }
   
   const getLocation = () => {  
@@ -30,9 +31,10 @@ function App() {
     if( latlon[0] != null && latlon[1] != null ) {
       console.log("New location :", latlon);
       client
-        .get(`/data/3.0/onecall?lat=${latlon[0]}&lon=${latlon[1]}&appid=${API_Key}`)
+        .get(`/data/2.5/weather?lat=${latlon[0]}&lon=${latlon[1]}&units=metric&appid=${API_Key}`)
         .then((response)=>{
           console.log(response.data)
+          setData(response.data)
       })
         .catch(()=>{
           console.log("error");
@@ -41,14 +43,29 @@ function App() {
     
   }
   
-  return (
+  if (data.weather == "No") {
+    return (
     <>
       <button onClick={getLocation}>Get location</button>
       <br />
       <br />
       <button onClick={getWeather}>Get weather</button>
+      <br />
+      <br />
+
     </>
-  )
+  )} else {
+    return  (   
+    <>
+      <p>Location: {data?.name}</p>
+      <p>Latitude: {latlon[0]}, Longitude: {latlon[1]}</p>
+      <p>Weather: {data?.weather[0]?.main}</p>
+      <p>Temperature: {data?.main?.temp}</p>
+      <p>Wind: {data?.wind?.speed}</p>
+      <p>Humidity: {data?.main?.humidity}</p>
+    </>  
+    )
+  }
 }
 
 export default App
