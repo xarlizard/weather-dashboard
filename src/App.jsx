@@ -1,8 +1,11 @@
 import { useState } from 'react'
 import './App.css'
 import axios from "axios"
+//import { defineConfig, loadEnv } from 'vite'; //When accessing from outside the source of the App main source code, we need this line to fetch env variables i.e. if we declare a local/private worker within the cloudflare instance to properly lopad a secret variable within cloudlflare's deploy
 
-const API_Key = "025eb857d7905a8da51fc4e27af4e6a9" //Free public api key, could be revoked
+//Depending on the environment, we load the API_Key from the development path route or from the production stored secret
+const APP_Key = (import.meta.env.MODE === "development") ? await import.meta.env.VITE_APP_Key : await import.meta.env.VITE_APP_Key;
+  
 //const time = Date.now();
 
 //const baseUrl = "https://api.openweathermap.org"
@@ -28,17 +31,19 @@ function App() {
   }
 
   const getWeather = () => {
-    if( latlon[0] != null && latlon[1] != null ) {
+    if( latlon[0] != null && latlon[1] != null) {
       console.log("New location :", latlon);
       client
-        .get(`/data/2.5/weather?lat=${latlon[0]}&lon=${latlon[1]}&units=metric&appid=${API_Key}`)
+        .get(`/data/2.5/weather?lat=${latlon[0]}&lon=${latlon[1]}&units=metric&appid=${APP_Key}`)
         .then((response)=>{
-          console.log(response.data)
+          //We output the api response and populate the data variable with it
+          console.log("Server response: ", response.data)
           setData(response.data)
-      })
+        })
         .catch(()=>{
+          //If the API calls returns an error we output on the console, proper error handling is required i.e. lcoation permission is denied or API response ran out of time o needs a valid api key
           console.log("error");
-      })
+        })
     }
     
   }
