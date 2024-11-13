@@ -4,7 +4,7 @@ import axios from "axios"
 //import { defineConfig, loadEnv } from 'vite'; //When accessing from outside the source of the App main source code, we need this line to fetch env variables i.e. if we declare a local/private worker within the cloudflare instance to properly lopad a secret variable within cloudlflare's deploy
 
 //Depending on the environment, we load the API_Key from the development path route or from the production stored secret
-const APP_Key = (import.meta.env.MODE === "development") ? await import.meta.env.VITE_APP_Key : await import.meta.env.VITE_APP_Key;
+const APP_Key = (import.meta.env.MODE === "development") ? await import.meta.env.VITE_APP_Key : await env.VITE_APP_Key;
   
 //const time = Date.now();
 
