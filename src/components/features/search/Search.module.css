@@ -1,0 +1,62 @@
+.searchContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  padding: 1rem;
+}
+
+.searchCard {
+  background: var(--color-card-bg);
+  border: none;
+  border-radius: 1rem;
+  box-shadow: 0 4px 24px 0 var(--color-card-shadow);
+  max-width: 600px;
+  width: 100%;
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.searchCard:hover {
+  box-shadow: 0 8px 32px 0 var(--color-card-shadow-hover);
+}
+
+/* Override Bootstrap styles with our theme variables */
+.searchCard :global(.card-title) {
+  color: var(--color-dashboard-title);
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.searchCard :global(.form-label) {
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+.searchCard :global(.form-control) {
+  background: var(--color-bg);
+  border: 1px solid var(--color-card-shadow);
+  color: var(--color-text);
+}
+
+.searchCard :global(.form-control:focus) {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 0.2rem var(--color-card-shadow);
+}
+
+.searchCard :global(.input-group-text) {
+  background: var(--color-primary);
+  color: white;
+  border: none;
+}
+
+.searchCard :global(.btn-primary) {
+  background: var(--color-primary);
+  border: none;
+  padding: 0.75rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.searchCard :global(.btn-primary:hover) {
+  background: var(--color-primary-hover);
+}

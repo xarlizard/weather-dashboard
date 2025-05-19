@@ -1,0 +1,167 @@
+.weatherCard {
+  background: var(--color-card-bg);
+  border: none;
+  border-radius: 1.25rem;
+  box-shadow: 0 8px 32px var(--color-card-shadow);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.weatherCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 48px var(--color-card-shadow-hover);
+}
+
+.cardBody {
+  padding: 2rem;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.location {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--color-weather-main);
+  margin: 0;
+}
+
+.mainInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  .mainInfo {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+}
+
+.weatherMain {
+  text-align: center;
+}
+
+.weatherIcon {
+  width: 120px;
+  height: 120px;
+  filter: drop-shadow(0 0 8px var(--color-card-shadow));
+  transition: transform 0.3s ease;
+}
+
+.weatherCard:hover .weatherIcon {
+  transform: scale(1.05);
+}
+
+.weatherDesc {
+  margin-top: 1rem;
+}
+
+.weatherDesc h3 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--color-weather-main);
+  margin: 0;
+}
+
+.weatherDesc p {
+  color: var(--color-weather-desc);
+  font-size: 1.1rem;
+  margin: 0.25rem 0 0;
+  text-transform: capitalize;
+}
+
+.tempContainer {
+  text-align: center;
+}
+
+.tempValue {
+  font-size: 4.5rem;
+  font-weight: 700;
+  color: var(--color-weather-temp);
+  line-height: 1;
+}
+
+.tempUnit {
+  font-size: 2rem;
+  font-weight: 500;
+  color: var(--color-weather-desc);
+  margin-left: 0.25rem;
+}
+
+.detailCard {
+  height: 100%;
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-card-shadow);
+  border-radius: 1rem;
+  transition: transform 0.2s ease;
+}
+
+.detailCard:hover {
+  transform: translateY(-2px);
+}
+
+.detailIcon {
+  font-size: 1.75rem;
+  width: 2.5rem;
+  text-align: center;
+}
+
+.detailLabel {
+  font-size: 0.875rem;
+  color: var(--color-weather-desc);
+  margin-bottom: 0.25rem;
+}
+
+.detailValue {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-weather-main);
+}
+
+.detailUnit {
+  font-size: 0.875rem;
+  color: var(--color-weather-desc);
+  margin-left: 0.25rem;
+}
+
+.coordinates {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+@media (max-width: 576px) {
+  .cardBody {
+    padding: 1.5rem;
+  }
+
+  .location {
+    font-size: 1.5rem;
+  }
+
+  .tempValue {
+    font-size: 3.5rem;
+  }
+
+  .tempUnit {
+    font-size: 1.5rem;
+  }
+
+  .weatherIcon {
+    width: 100px;
+    height: 100px;
+  }
+
+  .weatherDesc h3 {
+    font-size: 1.5rem;
+  }
+
+  .weatherDesc p {
+    font-size: 1rem;
+  }
+}
