@@ -13,7 +13,16 @@ import styles from "./DashboardLayout.module.css";
 
 const navItems = [
   { path: "/", icon: <AiOutlineHome size={20} />, label: "Home" },
-  { path: "/search", icon: <BiSearch size={20} />, label: "Search" },
+  { 
+    path: "/search/coordinates", 
+    icon: <BiSearch size={20} />, 
+    label: "Search by Coordinates" 
+  },
+  { 
+    path: "/search/city", 
+    icon: <BiSearch size={20} />, 
+    label: "Search by City" 
+  },
   { path: "/map", icon: <BiMap size={20} />, label: "Map Selector" },
   {
     path: "#",

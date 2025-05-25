@@ -26,7 +26,11 @@ function App() {
       <Routes>
         <Route path="/" element={<DashboardLayout />}>
           <Route index element={<Home />} />
-          <Route path="search" element={<Search />} />
+          <Route path="search">
+            <Route index element={<Search.Latitude />} />
+            <Route path="coordinates" element={<Search.Latitude />} />
+            <Route path="city" element={<Search.CityName />} />
+          </Route>
           <Route path="map" element={<MapSelector />} />
           <Route
             path=":location"

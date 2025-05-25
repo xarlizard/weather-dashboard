@@ -51,6 +51,7 @@
     "axios": "^1.7.7",
     "bootstrap": "^5.3.6",
     "leaflet": "^1.9.4",
+    "nominatim-geocoder": "^0.1.4",
     "react": "^19.1.0",
     "react-bootstrap": "^2.10.10",
     "react-dom": "^19.1.0",

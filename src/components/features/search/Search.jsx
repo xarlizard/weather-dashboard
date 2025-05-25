@@ -7,7 +7,9 @@ import Card from "react-bootstrap/Card";
 import Alert from "react-bootstrap/Alert";
 import styles from "./Search.module.css";
 
-function Search() {
+import CitySearch from './CitySearch';
+
+function CoordinateSearch() {
   const navigate = useNavigate();
   const [coordinates, setCoordinates] = useState({ lat: "", lon: "" });
   const [error, setError] = useState("");
@@ -97,5 +99,10 @@ function Search() {
     </div>
   );
 }
+
+const Search = {
+  Latitude: CoordinateSearch,
+  CityName: CitySearch
+};
 
 export default Search;
