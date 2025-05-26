@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
-import { THEMES } from "../config/themes";
+import { THEMES } from "@/config/themes";
 
 function getSystemTheme() {
-  if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+  if (
+    window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches
+  ) {
     return "dark";
   }
   return "light";
 }
 
-const themeKeys = THEMES.map(t => t.key);
+const themeKeys = THEMES.map((t) => t.key);
 
 export function useTheme() {
   const [theme, setTheme] = useState(() => {
