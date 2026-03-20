@@ -1,41 +1,33 @@
 import { useWeatherContext } from "@/contexts/WeatherContext";
 import WeatherDataCard from "./WeatherDataCard";
-import { Row, Col, Spinner, Alert } from "react-bootstrap";
-import styles from "./LocationDashboard.module.css";
+import { Spinner } from "@/components/ui/spinner";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 function LocationDashboard() {
   const { data, loading, error } = useWeatherContext();
 
   if (loading) {
     return (
-      <div
-        className="d-flex justify-content-center align-items-center"
-        style={{ minHeight: "60vh" }}
-      >
-        <Spinner animation="border" role="status" variant="primary">
-          <span className="visually-hidden">Loading...</span>
-        </Spinner>
+      <div className="flex justify-center items-center min-h-[60vh]">
+        <Spinner className="size-12 text-primary" />
       </div>
     );
   }
 
   if (error) {
     return (
-      <div
-        className="d-flex justify-content-center align-items-center"
-        style={{ minHeight: "60vh" }}
-      >
-        <Alert variant="danger">{error}</Alert>
+      <div className="flex justify-center items-center min-h-[60vh] p-4">
+        <Alert variant="destructive" className="max-w-md">
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
       </div>
     );
   }
 
   return (
-    <Row className={styles.container}>
-      <Col xs={12} lg={10} xl={8} className="mx-auto">
-        <WeatherDataCard data={data} />
-      </Col>
-    </Row>
+    <div className="p-4 md:p-8 max-w-4xl mx-auto">
+      <WeatherDataCard data={data} />
+    </div>
   );
 }
 

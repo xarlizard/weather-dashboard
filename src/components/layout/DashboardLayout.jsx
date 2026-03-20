@@ -1,32 +1,24 @@
 import { Link, Outlet, useLocation, useNavigate } from "react-router";
-import Container from "react-bootstrap/Container";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
 import ThemePicker from "@/components/ui/ThemePicker";
 import { useTheme } from "@/hooks/useTheme";
-import { AiOutlineHome } from "react-icons/ai";
-import { BiSearch, BiMap } from "react-icons/bi";
-import { MdMyLocation } from "react-icons/md";
-import { BsStar } from "react-icons/bs";
-import { WiDaySunny } from "react-icons/wi";
-import styles from "./DashboardLayout.module.css";
+import {
+  Home,
+  Search,
+  Map,
+  MapPin,
+  Star,
+  Sun,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const navItems = [
-  { path: "/", icon: <AiOutlineHome size={20} />, label: "Home" },
-  { 
-    path: "/search/coordinates", 
-    icon: <BiSearch size={20} />, 
-    label: "Search by Coordinates" 
-  },
-  { 
-    path: "/search/city", 
-    icon: <BiSearch size={20} />, 
-    label: "Search by City" 
-  },
-  { path: "/map", icon: <BiMap size={20} />, label: "Map Selector" },
+  { path: "/", icon: Home, label: "Home" },
+  { path: "/search/coordinates", icon: Search, label: "Search by Coordinates" },
+  { path: "/search/city", icon: Search, label: "Search by City" },
+  { path: "/map", icon: Map, label: "Map Selector" },
   {
     path: "#",
-    icon: <MdMyLocation size={20} />,
+    icon: MapPin,
     label: "Current Location",
     onClick: (navigate) => {
       if (navigator.geolocation) {
@@ -36,7 +28,7 @@ const navItems = [
             const lon = position.coords.longitude.toFixed(4);
             navigate(`/${lat},${lon}`);
           },
-          (_error) => {
+          () => {
             alert(
               "Location permission denied. Please enable location access to use this feature."
             );
@@ -47,8 +39,55 @@ const navItems = [
       }
     },
   },
-  { path: "/favorites", icon: <BsStar size={20} />, label: "Favorites" },
+  { path: "/favorites", icon: Star, label: "Favorites" },
 ];
+
+function NavLink({ item, isActive, navigate, mobile = false }) {
+  const Icon = item.icon;
+  const baseClass =
+    "flex items-center gap-2 rounded-lg transition-all text-[var(--color-nav-link)] hover:bg-[var(--color-card-shadow)] hover:text-[var(--color-nav-link-hover)]";
+  const activeClass = "bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary)] hover:text-white";
+
+  const desktopContent = (
+    <>
+      <Icon className="size-5 shrink-0" />
+      <span className="hidden lg:inline">{item.label}</span>
+    </>
+  );
+
+  const mobileContent = (
+    <>
+      <Icon className="size-5 shrink-0" />
+      <span className="text-xs">{item.label}</span>
+    </>
+  );
+
+  const content = mobile ? mobileContent : desktopContent;
+  const wrapperClass = mobile
+    ? "flex flex-col items-center justify-center py-2 px-3 min-w-0"
+    : "w-full justify-start px-4 py-3";
+
+  if (item.onClick) {
+    return (
+      <button
+        type="button"
+        onClick={() => item.onClick(navigate)}
+        className={cn(baseClass, wrapperClass, isActive && activeClass)}
+      >
+        {content}
+      </button>
+    );
+  }
+
+  return (
+    <Link
+      to={item.path}
+      className={cn(baseClass, wrapperClass, isActive && activeClass)}
+    >
+      {content}
+    </Link>
+  );
+}
 
 function DashboardLayout() {
   const [theme, setTheme] = useTheme();
@@ -56,77 +95,57 @@ function DashboardLayout() {
   const navigate = useNavigate();
 
   return (
-    <div className={styles.dashboardRoot}>
+    <div className="min-h-screen flex bg-[var(--color-dashboard-bg)]">
       {/* Desktop Sidebar */}
-      <Navbar className={styles.sidebar}>
-        <Nav className="flex-column gap-2 w-100">
+      <aside className="hidden md:flex fixed left-0 top-0 w-60 h-screen flex-col bg-[var(--color-nav-bg)] border-r border-[var(--color-card-shadow)] p-4">
+        <nav className="flex flex-col gap-2 flex-1">
           <div className="p-3 mb-2 text-center">
-            <Link to="/" className={styles.logo}>
-              <span className="fs-3">
-                <WiDaySunny size={28} />
-              </span>
-              <span className="d-none d-lg-inline ms-2 fs-5">Weather</span>
+            <Link
+              to="/"
+              className="flex items-center justify-center text-[var(--color-nav-link)] font-semibold no-underline hover:text-[var(--color-nav-link-hover)] transition-colors"
+            >
+              <Sun className="size-7" />
+              <span className="hidden lg:inline ms-2 text-lg">Weather</span>
             </Link>
           </div>
 
-          <div className="nav-items px-3">
+          <div className="flex flex-col gap-1">
             {navItems.map((item) => (
-              <Nav.Link
-                key={item.path}
-                as={item.onClick ? "button" : Link}
-                to={!item.onClick ? item.path : undefined}
-                onClick={
-                  item.onClick ? () => item.onClick(navigate) : undefined
-                }
-                className={`${styles.navItem} ${
-                  location.pathname === item.path ? styles.active : ""
-                }`}
-              >
-                <span className="nav-icon">{item.icon}</span>
-                <span className="nav-label d-none d-lg-inline ms-3">
-                  {item.label}
-                </span>
-              </Nav.Link>
+              <NavLink
+                key={item.path + item.label}
+                item={item}
+                isActive={location.pathname === item.path}
+                navigate={navigate}
+              />
             ))}
           </div>
 
-          <div className="mt-auto p-3 d-flex justify-content-center">
+          <div className="mt-auto p-3 flex justify-center">
             <ThemePicker variant="all" value={theme} onChange={setTheme} />
           </div>
-        </Nav>
-      </Navbar>
+        </nav>
+      </aside>
 
       {/* Mobile Bottom Nav */}
-      <Navbar fixed="bottom" className={`d-md-none ${styles.mobileNav}`}>
-        <Container fluid className="px-2">
-          <Nav className="w-100 justify-content-around">
-            {navItems.map((item) => (
-              <Nav.Link
-                key={item.path}
-                as={item.onClick ? "button" : Link}
-                to={!item.onClick ? item.path : undefined}
-                onClick={
-                  item.onClick ? () => item.onClick(navigate) : undefined
-                }
-                className={`${styles.mobileNavItem} ${
-                  location.pathname === item.path ? styles.active : ""
-                }`}
-              >
-                <div className="d-flex flex-column align-items-center">
-                  <span className="nav-icon mb-1">{item.icon}</span>
-                  <span className="nav-label small">{item.label}</span>
-                </div>
-              </Nav.Link>
-            ))}
-          </Nav>
-        </Container>
-      </Navbar>
+      <nav className="md:hidden fixed bottom-0 left-0 w-full bg-[var(--color-nav-bg)] border-t border-[var(--color-card-shadow)] py-2 z-[1000] [--mobile-nav-height:4rem]">
+        <div className="flex justify-around">
+          {navItems.map((item) => (
+            <NavLink
+              key={item.path + item.label}
+              item={item}
+              isActive={location.pathname === item.path}
+              navigate={navigate}
+              mobile
+            />
+          ))}
+        </div>
+      </nav>
 
       {/* Main Content */}
-      <main className={styles.main}>
-        <Container fluid className="py-4 px-3 px-md-4">
+      <main className="flex-1 md:ml-60 min-h-screen pb-[var(--mobile-nav-height,0)]">
+        <div className="py-4 px-3 md:px-4">
           <Outlet />
-        </Container>
+        </div>
       </main>
     </div>
   );

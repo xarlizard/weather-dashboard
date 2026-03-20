@@ -1,4 +1,46 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* App theme variables (for sidebar, cards, etc.) */
 :root {
+  --radius: 0.625rem;
   --color-bg: #ffffff;
   --color-text: #213547;
   --color-primary: #646cff;
@@ -11,15 +53,31 @@
   --color-weather-main: #3a3a40;
   --color-weather-desc: #6c757d;
   --color-weather-temp: #22223b;
-  --color-weather-details: #444;
-  --color-weather-details-label: #22223b;
-  --color-weather-footer: #888;
   --color-nav-bg: #22223b;
   --color-nav-link: #fff;
   --color-nav-link-hover: #a3bffa;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.385 0.184 264.695);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
 }
 
-[data-theme="dark"] {
+[data-theme="dark"],
+.dark {
   --color-bg: #242424;
   --color-text: #fff;
   --color-primary: #646cff;
@@ -32,12 +90,27 @@
   --color-weather-main: #a3bffa;
   --color-weather-desc: #b0b8c1;
   --color-weather-temp: #e0e7ff;
-  --color-weather-details: #b0b8c1;
-  --color-weather-details-label: #a3bffa;
-  --color-weather-footer: #b0b8c1;
   --color-nav-bg: #232336;
   --color-nav-link: #fff;
   --color-nav-link-hover: #a3bffa;
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.488 0.243 264.376);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
 }
 
 [data-theme="winter"] {
@@ -53,12 +126,33 @@
   --color-weather-main: #357ab8;
   --color-weather-desc: #5a7fa3;
   --color-weather-temp: #357ab8;
-  --color-weather-details: #5a7fa3;
-  --color-weather-details-label: #357ab8;
-  --color-weather-footer: #5a7fa3;
   --color-nav-bg: #4a90e2;
   --color-nav-link: #fff;
   --color-nav-link-hover: #b3d8f8;
+  --primary: oklch(0.55 0.2 250);
+  --primary-foreground: oklch(0.985 0 0);
+}
+
+@media (max-width: 767.98px) {
+  :root {
+    --mobile-nav-height: 4rem;
+  }
+}
+
+/* Leaflet map styles */
+.leaflet-container {
+  background: var(--color-card-bg);
+}
+.leaflet-control-attribution {
+  background: var(--color-card-bg) !important;
+  color: var(--color-text) !important;
+}
+.leaflet-control-attribution a {
+  color: var(--color-primary) !important;
+}
+.leaflet-touch .leaflet-control-layers,
+.leaflet-touch .leaflet-bar {
+  border-color: var(--color-card-shadow) !important;
 }
 
 [data-theme="summer"] {
@@ -74,12 +168,9 @@
   --color-weather-main: #ff9800;
   --color-weather-desc: #bfa76a;
   --color-weather-temp: #ff9800;
-  --color-weather-details: #bfa76a;
-  --color-weather-details-label: #ff9800;
-  --color-weather-footer: #bfa76a;
   --color-nav-bg: #ffb347;
   --color-nav-link: #fff;
   --color-nav-link-hover: #ffe082;
+  --primary: oklch(0.75 0.15 70);
+  --primary-foreground: oklch(0.2 0 0);
 }
-
-

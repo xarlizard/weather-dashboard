@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router";
 import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import styles from "./MapSelector.module.css";
 
 function MapEvents() {
   const navigate = useNavigate();
@@ -18,11 +17,11 @@ function MapEvents() {
 
 function MapSelector() {
   return (
-    <div className={styles.mapContainer}>
+    <div className="relative w-full h-[calc(100vh-2rem)] rounded-lg overflow-hidden bg-[var(--color-card-bg)] shadow-[0_0_10px_var(--color-card-shadow)]">
       <MapContainer
         center={[20, 0]}
         zoom={2}
-        className={styles.map}
+        className="w-full h-full"
         scrollWheelZoom={true}
       >
         <TileLayer
@@ -31,7 +30,7 @@ function MapSelector() {
         />
         <MapEvents />
       </MapContainer>
-      <div className={styles.instructions}>
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-[var(--color-card-bg)] px-4 py-2 rounded-lg shadow-md text-sm text-[var(--color-text)] z-[1000]">
         Click anywhere on the map to get weather data for that location
       </div>
     </div>

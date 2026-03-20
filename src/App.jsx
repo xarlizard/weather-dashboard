@@ -7,12 +7,9 @@ import { WeatherProvider } from "@/contexts/WeatherContext";
 
 function Home() {
   return (
-    <div
-      className="d-flex flex-column align-items-center justify-content-center"
-      style={{ minHeight: "60vh" }}
-    >
-      <h1 className="mb-4">Welcome to the Weather Dashboard</h1>
-      <p className="lead">
+    <div className="flex flex-col items-center justify-center min-h-[60vh]">
+      <h1 className="mb-4 text-3xl font-bold">Welcome to the Weather Dashboard</h1>
+      <p className="text-lg text-muted-foreground text-center max-w-xl">
         Search for a location or use the URL to view weather data for specific
         coordinates.
       </p>

@@ -1,13 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
-import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
-import Alert from "react-bootstrap/Alert";
-import styles from "./Search.module.css";
-
-import CitySearch from './CitySearch';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import CitySearch from "./CitySearch";
 
 function CoordinateSearch() {
   const navigate = useNavigate();
@@ -18,7 +16,6 @@ function CoordinateSearch() {
     e.preventDefault();
     const { lat, lon } = coordinates;
 
-    // Basic validation
     if (!lat || !lon || isNaN(lat) || isNaN(lon)) {
       setError("Please enter valid coordinates");
       return;
@@ -31,70 +28,69 @@ function CoordinateSearch() {
       return;
     }
 
-    // Navigate to location route
     navigate(`/${lat},${lon}`);
   };
 
   return (
-    <div className={styles.searchContainer}>
-      <Card className={styles.searchCard}>
-        <Card.Body>
-          <Card.Title className="mb-4">
+    <div className="flex justify-center items-center min-h-[60vh] p-4">
+      <Card className="w-full max-w-[600px] bg-[var(--color-card-bg)] border-none shadow-lg hover:shadow-xl transition-shadow">
+        <CardHeader>
+          <CardTitle className="text-center text-[var(--color-dashboard-title)] text-2xl">
             Search Weather by Coordinates
-          </Card.Title>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
           {error && (
-            <Alert variant="danger" onClose={() => setError("")} dismissible>
-              {error}
+            <Alert variant="destructive" className="mb-4">
+              <AlertDescription>{error}</AlertDescription>
             </Alert>
           )}
-          <Form onSubmit={handleSubmit}>
-            <div className="d-flex gap-3 mb-3">
-              <Form.Group className="flex-grow-1">
-                <Form.Label>Latitude</Form.Label>
-                <InputGroup>
-                  <Form.Control
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="flex gap-4 flex-col sm:flex-row">
+              <div className="flex-1 space-y-2">
+                <Label htmlFor="lat">Latitude</Label>
+                <div className="flex">
+                  <Input
+                    id="lat"
                     type="number"
                     step="any"
                     placeholder="e.g. 41.3534"
                     value={coordinates.lat}
                     onChange={(e) =>
-                      setCoordinates((prev) => ({
-                        ...prev,
-                        lat: e.target.value,
-                      }))
+                      setCoordinates((prev) => ({ ...prev, lat: e.target.value }))
                     }
+                    className="rounded-r-none"
                   />
-                  <InputGroup.Text>°N/S</InputGroup.Text>
-                </InputGroup>
-              </Form.Group>
-
-              <Form.Group className="flex-grow-1">
-                <Form.Label>Longitude</Form.Label>
-                <InputGroup>
-                  <Form.Control
+                  <span className="inline-flex items-center px-3 bg-primary text-primary-foreground rounded-r-md text-sm">
+                    °N/S
+                  </span>
+                </div>
+              </div>
+              <div className="flex-1 space-y-2">
+                <Label htmlFor="lon">Longitude</Label>
+                <div className="flex">
+                  <Input
+                    id="lon"
                     type="number"
                     step="any"
                     placeholder="e.g. 2.1211"
                     value={coordinates.lon}
                     onChange={(e) =>
-                      setCoordinates((prev) => ({
-                        ...prev,
-                        lon: e.target.value,
-                      }))
+                      setCoordinates((prev) => ({ ...prev, lon: e.target.value }))
                     }
+                    className="rounded-r-none"
                   />
-                  <InputGroup.Text>°E/W</InputGroup.Text>
-                </InputGroup>
-              </Form.Group>
+                  <span className="inline-flex items-center px-3 bg-primary text-primary-foreground rounded-r-md text-sm">
+                    °E/W
+                  </span>
+                </div>
+              </div>
             </div>
-
-            <div className="d-grid">
-              <Button variant="primary" type="submit">
-                Get Weather
-              </Button>
-            </div>
-          </Form>
-        </Card.Body>
+            <Button type="submit" className="w-full">
+              Get Weather
+            </Button>
+          </form>
+        </CardContent>
       </Card>
     </div>
   );
@@ -102,7 +98,7 @@ function CoordinateSearch() {
 
 const Search = {
   Latitude: CoordinateSearch,
-  CityName: CitySearch
+  CityName: CitySearch,
 };
 
 export default Search;
