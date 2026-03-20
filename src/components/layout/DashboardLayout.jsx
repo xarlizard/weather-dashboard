@@ -1,5 +1,6 @@
 import { Link, Outlet, useLocation, useNavigate } from "react-router";
 import ThemePicker from "@/components/ui/ThemePicker";
+import { GitHubFooter } from "@/components/common/GitHubFooter";
 import { useTheme } from "@/hooks/useTheme";
 import {
   Home,
@@ -142,11 +143,14 @@ function DashboardLayout() {
       </nav>
 
       {/* Main Content */}
-      <main className="flex-1 md:ml-60 min-h-screen pb-[var(--mobile-nav-height,0)]">
-        <div className="py-4 px-3 md:px-4">
-          <Outlet />
-        </div>
-      </main>
+      <div className="flex-1 md:ml-60 min-h-screen pb-28 md:pb-14">
+        <main>
+          <div className="py-4 px-3 md:px-4">
+            <Outlet />
+          </div>
+        </main>
+        <GitHubFooter />
+      </div>
     </div>
   );
 }
