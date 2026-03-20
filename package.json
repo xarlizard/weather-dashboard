@@ -39,6 +39,7 @@
     "modern-ui"
   ],
   "license": "MIT",
+  "packageManager": "bun@1.1.33",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
