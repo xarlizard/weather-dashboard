@@ -3,6 +3,7 @@ import {
   CardContent,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import PropTypes from "prop-types";
 import {
   Thermometer,
@@ -11,8 +12,9 @@ import {
   Cloud,
   Gauge,
   MapPin,
+  Star,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { useFavorites } from "@/hooks/useFavorites";
 
 const detailIcons = {
   "Feels Like": Thermometer,
@@ -52,7 +54,12 @@ DetailItem.propTypes = {
 };
 
 function WeatherDataCard({ data }) {
+  const { isFavorite, toggleFavorite } = useFavorites();
+
   if (!data) return null;
+
+  const { lat, lon } = data.coord;
+  const favorited = isFavorite(lat, lon);
 
   const details = [
     {
@@ -85,7 +92,18 @@ function WeatherDataCard({ data }) {
   return (
     <Card className="bg-[var(--color-card-bg)] border-none shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all overflow-hidden">
       <CardContent className="p-8">
-        <div className="text-center mb-8">
+        <div className="text-center mb-8 relative">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute top-0 right-0 text-[var(--color-weather-main)] hover:text-[var(--color-primary)]"
+            onClick={() => toggleFavorite(lat, lon, data.name)}
+            aria-label={favorited ? "Remove from favorites" : "Add to favorites"}
+          >
+            <Star
+              className={`size-6 ${favorited ? "fill-current" : ""}`}
+            />
+          </Button>
           <h2 className="text-3xl md:text-4xl font-semibold text-[var(--color-weather-main)] m-0 flex items-center justify-center gap-2 flex-wrap">
             {data.name}
             <Badge variant="secondary" className="text-sm">
